@@ -57,6 +57,8 @@
                         <br>
                         <a href="/attendance/create">Crear Hoja Asistencia</a>
                         <br>
+                        <a href="filter">Filtrar Asistencias</a>
+                        <br>
                 </div>
             </div>
         </div>
