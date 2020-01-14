@@ -12,9 +12,19 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get ('/home', 'DashboardController@getAllData');
+
+Route::resource ('evaluation', 'EvaluationController');
+Route::get ('evaluationsByUser', 'EvaluationController@getEvaluationsByUser');
+Route::get('avgEvaluationsByUser', 'EvaluationController@avgEvaluationsByUser');
+
+Route::resource('/user', 'UserController');
+Route::resource('attendance', 'AttendanceController');
+Route::get('filter', 'AttendanceController@getFilters');
+Route::post('filter', 'AttendanceController@applyFilters');
+Route::get('attendanceIndicators', 'AttendanceController@getUserAttendanceIndicators');
