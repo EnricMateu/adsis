@@ -7,14 +7,15 @@ use Faker\Generator as Faker;
 
 $factory->define(Evaluation::class, function (Faker $faker) {
     return [
-        'language' => $faker->numberBetween($min = 1, $max = 5),
-        'attitude' => $faker->numberBetween($min = 1, $max = 5),
-        'participation' => $faker->numberBetween($min = 1, $max = 5),
-        'learning' => $faker->numberBetween($min = 1, $max = 5),
-        'collaboration' => $faker->numberBetween($min = 1, $max = 5),
-        'meteo' => $faker->numberBetween($min = 1, $max = 5),
-        'user_id' => $faker->numberBetween($min = 1, $max = 5),
-        'review_status' => $faker->boolean,
+        'language' => $faker->numberBetween($min = 1, $max = 10),
+        'attitude' => $faker->numberBetween($min = 1, $max = 10),
+        'learning' => $faker->numberBetween($min = 1, $max = 10),
+        'workflow' => $faker->numberBetween($min = 1, $max = 10),
+        'meteo' => $faker->numberBetween($min = 1, $max = 10),
+        'course_id' => $faker->numberBetween($min = 1, $max = 4),
+        'scope' => $faker->randomElement($array = array('Teoría', 'Práctica')),
+        'user_id' => $faker->numberBetween($min = 1, $max = 11),
+        'filled' => false,
         'created_at' => $faker->unique()->dateTimeThisYear('now', null),
     ];
 });

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div>
+    <div id="content-list" style="margin-left: 50px">
         <h1>Lista de Asistencias</h1>
         <table> 
             <tr>
@@ -35,7 +35,7 @@
                 <br>
                 <form method="get" action="/attendance/create">
                             <input class="botonLista" type="submit" value="Crear Hoja Asistencia">
-                    <a href="/home">Home</a>
+                    {{-- <a href="/home">Home</a> --}}
         </div>
     </div>
 

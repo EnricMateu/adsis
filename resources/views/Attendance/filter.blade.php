@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div>
+    <div id="content-list" style="margin-left: 50px">
         <h1>Asistencias</h1>
         <h2>Campos de filtrado</h2>
         <form action="filter" method="POST">
@@ -17,7 +17,7 @@
               <div class="col-md-2 col-3">
                 <h5>Agrupado por</h5>
                 <select name="sortBy" class="form-control">
-                  @foreach(['curso', 'grupo', 'fecha'] as $col)
+                  @foreach(['grupo', 'fecha'] as $col)
                     <option @if($col) selected @endif value="{{ $col }}">{{ ucfirst($col) }}</option>
                   @endforeach
                 </select>
@@ -44,4 +44,5 @@
             </div>
           </form>
         </div>
+        <div style="height: 200px"></div>
 @endsection

@@ -1,26 +1,10 @@
 @extends('layouts.app')
 @section('content')
-    <div>
+    <div id="content-list" style="margin-left: 50px">
         <h2>Asistencias por Alumn@</h2>
 
         <h3>Indicadores</h3>
         <div id='result'></div>
-         {{-- <table> 
-            <tr>
-                <th>A</th>
-                <th>RJ</th>
-                <th>RNJ</th>
-                <th>FJ</th>
-                <th>FNJ</th>
-            </tr>
-                <td>{{$indicators[0][0]}}%</td>
-                <td>{{$indicators[0][1]}}%</td>
-                <td>{{$indicators[0][2]}}%</td>
-                <td>{{$indicators[0][3]}}%</td>
-                <td>{{$indicators[0][4]}}%</td>
-        </table> --}}
-
-
         <br>
         <table> 
             <tr>
@@ -49,7 +33,7 @@
             @endforeach
         </table>
         <br>
-        <a href="/home">Home</a>
+        
     </div>
 @endsection
 

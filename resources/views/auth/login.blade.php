@@ -26,7 +26,7 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <!-- CSS Files -->
-    <link href="{{ asset('css/material-kit.css?v=2.0.6') }}" rel="stylesheet" />
+    <link href="{{ asset('css/material-kit.css') }}" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="{{ asset('css/assets/demo/demo.css') }}" rel="stylesheet" />
 
@@ -41,26 +41,38 @@
 
 <body class="index-page">
 
+<nav class="navbar navbar-color-on-scroll fixed-top navbar-expand-lg" id="sectionsNav">
+    <div class="container">
+        <div class="navbar-translate">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <!-- Authentication Links -->
+                @guest
+                    @if (Route::has('register'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('REGÍSTRATE SI ERES NUEVO...') }}</a>
+                        </li>
+                    @endif
+                @endguest
+            </ul>
+        </div>
+    </div>
+</nav>
 
 <div class="main main-raised" style="background-image: url('img/city.jpg');">
-
-
-
-
-
-
-
 
     <div class="section section-signup" >
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-6 ml-auto mr-auto">
                     <div class="card card-login">
-
-
-
-
-
 
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
@@ -71,17 +83,12 @@
                             </div>
 
                             <div class="card-body">
-
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        <i class="material-icons">mail</i>
-                      </span>
+                                        <span class="input-group-text">
+                                            <i class="material-icons">mail</i>
+                                        </span>
                                     </div>
-
-
-
-
 
                                     <input id="email" type="email" placeholder="Email ..." class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
@@ -90,17 +97,14 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
-
-
                                 </div>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        <i class="material-icons">lock_outline</i>
-                      </span>
+                                        <span class="input-group-text">
+                                            <i class="material-icons">lock_outline</i>
+                                        </span>
                                     </div>
-
-                                    <input id="password" type="password" placeholder="Password..." class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                    <input id="password" type="password" placeholder="Contraseña..." class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -110,36 +114,20 @@
                                 </div>
                             </div>
                             <div class="footer text-center">
-
-
-
-
+                           
                                 <button type="submit" class="btn btn-success btn-round">
                                     {{ __('Entrar') }}
                                 </button>
                                 <br>
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Olvidó su contraseña?') }}
+                                        {{ __('Olvidaste tu contraseña?') }}
                                     </a>
                                 @endif
-
+                                
                             </div>
-
+                            
                         </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                     </div>
                 </div>

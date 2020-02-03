@@ -17,12 +17,13 @@ class CreateEvaluationsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('language')->nullable();
             $table->integer('attitude')->nullable();
-            $table->integer('participation')->nullable();
+            $table->integer('workflow')->nullable();
             $table->integer('learning')->nullable();
-            $table->integer('collaboration')->nullable();
             $table->integer('meteo')->nullable();
+            $table->string('scope')->nullable();
+            $table->integer('course_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
-            $table->boolean('review_status')->default(false);
+            $table->boolean('filled')->default(false);
             $table->timestamps();
         });
     }
