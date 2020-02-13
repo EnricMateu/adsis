@@ -8,9 +8,14 @@ use App\User;
 
 class Course extends Model
 {
-    protected $fillable = ['course_id_catalog', 'user_id'];
 
-    public function GetAllCourses(){
+    public $scopeTheory = 'Teoría';
+    public $scopePractice = 'Práctica';
+
+    protected $fillable = ['course_catalog_id', 'user_id'];
+
+    public function GetAllCourses()
+    {
         $allCourses = Course::all();
         return $allCourses;
     }
@@ -19,12 +24,16 @@ class Course extends Model
     {
         $Courses = $this->GetAllCourses()->where('user_id', $user_id);
         return $Courses;
-
     }
 
-    public function CourseCatalog()
+    public function courseCatalog()
     {
-        return $this->belongsTo(CourseCatalog::class, 'course_id_catalog' );
+        return $this->belongsTo(CourseCatalog::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public static function assignMultipleUsers($data)
@@ -34,7 +43,7 @@ class Course extends Model
         for ($i = $end; $i >= $numberOfInputs; $i -= $numberOfInputs) {
             $course= new Course;
             $user = new User;
-            $course->course_id_catalog = array_shift($data);
+            $course->course_catalog_id = array_shift($data);
             $user->group = array_shift($data);
             $user->id = array_shift($data);
             $course->user_id = $user->id;
@@ -43,6 +52,6 @@ class Course extends Model
             Course::create($course);
             $user->setGroup($group, $user->id);
         }
-        return true;
     }
+
 }

@@ -7,50 +7,44 @@ use Illuminate\Http\Request;
 
 class Event extends Model
 {
-    public $eventTypeCourse = 1;
-    public $eventTypeEvaluation = 2;
-    public $eventEvaluationScopeT ='Teoría';
-    public $eventEvaluationScopeP = 'Práctica';
-
     protected  $fillable = ['user_id', 'event_id', 'event_type', 'event_date', 'event_scope'];
 
-    public function createEventTypeCourse($course)
+    public static function createEventTypeCourse($course)
     {
         Event::create([
            'user_id' => $course['user_id'],
-           'event_id' => $course['id_course'],
-           'event_type' => $this->eventTypeCourse,
-           'event_date' => $course->CourseCatalog->start_date,
-           'event_scope' => $course->CourseCatalog->name
+           'event_id' => $course['id'],
+           'event_type' => 1, // eventTypeCourse = 1
+           'event_date' => $course->courseCatalog->start_date,
+           'event_scope' => $course->courseCatalog->name
         ]);
     }
 
-    public  function createEventTypeEvaluationTheory($evaluation)
+    public static function createEventTypeTheory(Evaluation $evaluation)
     {
         Event::create([
             'user_id' => $evaluation['user_id'],
             'event_id' => $evaluation['id'],
-            'event_type' => $this->eventTypeEvaluation,
+            'event_type' => 2, // eventTypeEvaluation = 2
             'event_date' => $evaluation->created_at,
-            'event_scope' => $this->eventEvaluationScopeT
+            'event_scope' => 'Teoría'
         ]);
     }
 
-    public  function createEventTypeEvaluationPractice($evaluation)
+    public static function createEventTypePractice(Evaluation $evaluation)
     {
         Event::create([
-            'user_id' => $evaluation['user_id'],
-            'event_id' => $evaluation['id'],
-            'event_type' => $this->eventTypeEvaluation,
-            'event_date' => $evaluation->created_at,
-            'event_scope' => $this->eventEvaluationScopeP
-        ]);
-    }
+                'user_id' => $evaluation['user_id'],
+                'event_id' => $evaluation['id'],
+                'event_type' => 2,// eventTypeEvaluation = 2
+                'event_date' => $evaluation->created_at,
+                'event_scope' => 'Práctica'
+            ]);
+    }     
 
-    public  function showEventsByUser($user){
-
+    public  function showEventsByUser($user)
+    {
         $eventsByUser = Event::all()->where('user_id', $user);
-
         return $eventsByUser;
     }
 

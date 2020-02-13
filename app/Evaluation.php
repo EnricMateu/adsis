@@ -9,7 +9,53 @@ use Illuminate\Support\Facades\DB;
 
 class Evaluation extends Model
 {
-    protected $fillable = ['language', 'attitude', 'workflow', 'learning', 'meteo', 'scope', 'course_id', 'user_id', 'filled'];
+    // public static $evaluationTheoryCounter = 0;
+    // public static $evaluationPracticeCounter = 0;
+
+    protected $fillable = ['language', 'attitude', 'workflow', 'learning', 'meteo', 'scope', 'course_catalog_id', 'user_id', 'filled'];
+
+    public static function filterEvaluations($name, $sortBy, $orderBy)
+    {
+        $evaluationsFiltered = DB::table('evaluations')
+            ->join('users', 'users.id', '=', 'evaluations.user_id')
+            ->select('users.name', 'evaluations.id', 'evaluations.language', 'evaluations.attitude', 'evaluations.workflow', 'evaluations.learning', 'evaluations.meteo', 'evaluations.scope', 'evaluations.course_catalog_id', 'evaluations.updated_at')
+            ->where('users.name', $name)
+            ->orderBy($sortBy, $orderBy)
+            ->get();
+        return $evaluationsFiltered;
+    }
+
+    public static function initializeEvaluationTheory(Course $course)
+    {
+        $evaluation = new Evaluation();
+        $scope = 'Theory';
+        $evaluation->InitializeEvaluation($course, $scope);
+    
+        return true;
+    }
+
+    public static function initializeEvaluationPractice(Course $course)
+    {
+        $evaluation = new Evaluation();
+        $scope = 'Practice';
+        $evaluation->InitializeEvaluation($course, $scope);
+            
+        return true;
+    }
+
+    public function InitializeEvaluation($course, $scope)
+    {
+        $this->course_catalog_id = $course->courseCatalog->id;
+        $this->user_id = $course['user_id'];
+        if ($scope == 'Theory') {
+            $this->scope = $course->scopeTheory;
+            $this->save();
+        } else {
+            $this->scope = $course->scopePractice;
+            $this->save();
+        }
+        return true;
+    }
 
     public function GetAllEvaluations(){
         $allEvaluations = Evaluation::all();
@@ -37,7 +83,17 @@ class Evaluation extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function review()
+    {
+        return $this->hasOne(Review::class);
+    }
+
+    public function courseCatalog()
+    {
+        return $this->belongsTo(CourseCatalog::class);
     }
 
     protected function EvaluationsByUser($user)
@@ -71,6 +127,15 @@ class Evaluation extends Model
         $avgEvaluations->learning = round($avgLearning,1);
 
         return $avgEvaluations;
+    }
+
+    protected function GetEvaluationsNotFilled()
+    {
+        $evaluations = DB::table('evaluations')
+            ->where('filled', '=', false)
+            ->Orderby('created_at')
+            ->get();
+        return $evaluations;
     }
 
 }
